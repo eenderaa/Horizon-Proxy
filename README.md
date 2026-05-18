@@ -1,2 +1,0 @@
-# fake-OS
-self explanatory
