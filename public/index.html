@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Horizon Proxy</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="proxy-console" aria-labelledby="proxy-title">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <p>Horizon Proxy</p>
+        </div>
+
+        <h1 id="proxy-title">Open the web.</h1>
+
+        <form class="proxy-form" action="/go" method="get" data-proxy-form>
+          <label for="url">Address</label>
+          <div class="address-row">
+            <input
+              id="url"
+              name="url"
+              type="text"
+              inputmode="url"
+              autocomplete="url"
+              spellcheck="false"
+              placeholder="https://example.com"
+              data-proxy-input
+              required
+            />
+            <button type="submit">Go</button>
+          </div>
+          <p class="form-status" aria-live="polite" data-form-status></p>
+        </form>
+
+        <div class="quick-row" aria-label="Quick targets">
+          <button type="button" data-target="https://example.com">Example</button>
+          <button type="button" data-target="https://www.wikipedia.org">Wikipedia</button>
+          <button type="button" data-target="https://developer.mozilla.org">MDN</button>
+        </div>
+      </section>
+
+      <section class="visual-panel" aria-label="Proxy path">
+        <img src="/assets/proxy-lines.svg" alt="" />
+        <dl class="status-grid">
+          <div>
+            <dt>Bind</dt>
+            <dd>127.0.0.1</dd>
+          </div>
+          <div>
+            <dt>Mode</dt>
+            <dd>Local</dd>
+          </div>
+          <div>
+            <dt>Targets</dt>
+            <dd>HTTP/S</dd>
+          </div>
+        </dl>
+      </section>
+    </main>
+  </body>
+</html>
