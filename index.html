@@ -1,237 +1,289 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrowserOS</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<title>BrowserOS</title>
 
-    body {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070') center/cover;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-    #desktop {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
+body{
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:#111;
+}
 
-    .desktop-icon {
-      width: 80px;
-      text-align: center;
-      color: white;
-      margin: 20px;
-      cursor: pointer;
-      user-select: none;
-    }
+#desktop{
+  width:100%;
+  height:100%;
+  position:relative;
+  background:
+    linear-gradient(
+      135deg,
+      #1e293b,
+      #0f172a,
+      #020617
+    );
+}
 
-    .desktop-icon img {
-      width: 64px;
-      height: 64px;
-    }
+.desktop-icon{
+  width:90px;
+  text-align:center;
+  color:white;
+  cursor:pointer;
+  user-select:none;
+  padding:10px;
+  margin:20px;
+}
 
-    .window {
-      width: 900px;
-      height: 600px;
-      background: #1e1e1e;
-      position: absolute;
-      top: 80px;
-      left: 120px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-      resize: both;
-      z-index: 100;
-    }
+.desktop-icon img{
+  width:64px;
+  height:64px;
+}
 
-    .titlebar {
-      height: 40px;
-      background: #2b2b2b;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 10px;
-      color: white;
-      cursor: move;
-    }
+.window{
+  width:1000px;
+  height:650px;
+  background:#18181b;
+  position:absolute;
+  top:70px;
+  left:120px;
+  border-radius:12px;
+  overflow:hidden;
+  resize:both;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.5);
+  display:none;
+}
 
-    .window-buttons {
-      display: flex;
-      gap: 8px;
-    }
+.titlebar{
+  width:100%;
+  height:42px;
+  background:#27272a;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  color:white;
+  cursor:move;
+}
 
-    .window-button {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
+.window-buttons{
+  display:flex;
+  gap:8px;
+}
 
-    .close {
-      background: #ff5f56;
-    }
+.window-button{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  cursor:pointer;
+}
 
-    .minimize {
-      background: #ffbd2e;
-    }
+.close{
+  background:#ff5f56;
+}
 
-    .maximize {
-      background: #27c93f;
-    }
+.minimize{
+  background:#ffbd2e;
+}
 
-    .browser-toolbar {
-      height: 50px;
-      background: #252525;
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      gap: 10px;
-    }
+.maximize{
+  background:#27c93f;
+}
 
-    .browser-toolbar input {
-      flex: 1;
-      height: 36px;
-      border: none;
-      border-radius: 8px;
-      padding: 0 12px;
-      background: #3a3a3a;
-      color: white;
-      outline: none;
-    }
+.browser-toolbar{
+  width:100%;
+  height:55px;
+  background:#18181b;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-bottom:1px solid #27272a;
+}
 
-    .browser-toolbar button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 8px;
-      background: #3b82f6;
-      color: white;
-      cursor: pointer;
-    }
+.browser-toolbar input{
+  flex:1;
+  height:38px;
+  border:none;
+  border-radius:10px;
+  padding:0 14px;
+  background:#27272a;
+  color:white;
+  outline:none;
+  font-size:15px;
+}
 
-    iframe {
-      width: 100%;
-      height: calc(100% - 90px);
-      border: none;
-      background: white;
-    }
+.browser-toolbar button{
+  height:38px;
+  border:none;
+  padding:0 18px;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    #taskbar {
-      width: 100%;
-      height: 50px;
-      background: rgba(20,20,20,0.85);
-      backdrop-filter: blur(10px);
-      position: absolute;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-      padding: 0 10px;
-      color: white;
-    }
+.browser-toolbar button:hover{
+  background:#1d4ed8;
+}
 
-    #start-button {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: #3b82f6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      margin-right: 10px;
-    }
+iframe{
+  width:100%;
+  height:calc(100% - 97px);
+  border:none;
+  background:white;
+}
 
-    #clock {
-      margin-left: auto;
-      padding-right: 10px;
-    }
+#taskbar{
+  width:100%;
+  height:50px;
+  background:rgba(10,10,10,0.8);
+  backdrop-filter:blur(10px);
+  position:absolute;
+  bottom:0;
+  display:flex;
+  align-items:center;
+  padding:0 10px;
+  color:white;
+}
 
-    #start-menu {
-      width: 300px;
-      height: 400px;
-      background: rgba(25,25,25,0.95);
-      position: absolute;
-      bottom: 60px;
-      left: 10px;
-      border-radius: 12px;
-      display: none;
-      padding: 20px;
-      color: white;
-      backdrop-filter: blur(12px);
-    }
+#start-button{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  margin-right:12px;
+  font-size:18px;
+}
 
-    .app-item {
-      padding: 12px;
-      background: #333;
-      border-radius: 8px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
+#start-menu{
+  width:280px;
+  height:350px;
+  position:absolute;
+  bottom:60px;
+  left:10px;
+  background:rgba(24,24,27,0.95);
+  border-radius:14px;
+  display:none;
+  color:white;
+  padding:20px;
+  backdrop-filter:blur(12px);
+}
 
-    .app-item:hover {
-      background: #444;
-    }
-  </style>
+.app-item{
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  background:#27272a;
+  cursor:pointer;
+}
+
+.app-item:hover{
+  background:#3f3f46;
+}
+
+#clock{
+  margin-left:auto;
+  padding-right:10px;
+}
+
+.loading{
+  color:white;
+  padding:20px;
+}
+</style>
 </head>
+
 <body>
 
 <div id="desktop">
 
   <div class="desktop-icon" onclick="openBrowser()">
-    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" />
+    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png">
     <div>Browser</div>
   </div>
 
-  <div id="browser-window" class="window" style="display:none;">
+  <div id="browser-window" class="window">
 
     <div class="titlebar" id="drag-bar">
+
       <div>Scramjet Browser</div>
 
       <div class="window-buttons">
         <div class="window-button minimize"></div>
         <div class="window-button maximize"></div>
-        <div class="window-button close" onclick="closeBrowser()"></div>
+        <div class="window-button close"
+             onclick="closeBrowser()"></div>
       </div>
+
     </div>
 
     <div class="browser-toolbar">
-      <input id="url-input" type="text" value="https://example.com" />
-      <button onclick="goToUrl()">Go</button>
+
+      <input
+        id="url-input"
+        type="text"
+        value="https://example.com"
+      >
+
+      <button onclick="goToUrl()">
+        Go
+      </button>
+
     </div>
 
-    <iframe id="browser-frame"></iframe>
+    <iframe
+      id="browser-frame"
+      sandbox="
+      allow-scripts
+      allow-same-origin
+      allow-forms
+      allow-popups
+      allow-modals
+      "
+    ></iframe>
 
   </div>
 
   <div id="taskbar">
-    <div id="start-button" onclick="toggleStartMenu()">
+
+    <div id="start-button"
+         onclick="toggleStartMenu()">
       ⊞
     </div>
 
     <div>BrowserOS</div>
 
     <div id="clock"></div>
+
   </div>
 
   <div id="start-menu">
+
     <h2>Applications</h2>
 
-    <div class="app-item" onclick="openBrowser()">
+    <div class="app-item"
+         onclick="openBrowser()">
       Browser
     </div>
 
     <div class="app-item">
-      File Manager
+      Files
     </div>
 
     <div class="app-item">
@@ -241,135 +293,170 @@
     <div class="app-item">
       Settings
     </div>
+
   </div>
 
 </div>
 
-<script>
-  const browserWindow = document.getElementById('browser-window')
-  const browserFrame = document.getElementById('browser-frame')
-  const urlInput = document.getElementById('url-input')
-  const startMenu = document.getElementById('start-menu')
+<script type="module">
 
-  function openBrowser() {
-    browserWindow.style.display = 'block'
-    browserFrame.src = 'https://example.com'
+import { ScramjetController }
+from 'https://esm.sh/@mercuryworkshop/scramjet'
+
+const browserWindow =
+  document.getElementById('browser-window')
+
+const browserFrame =
+  document.getElementById('browser-frame')
+
+const urlInput =
+  document.getElementById('url-input')
+
+const startMenu =
+  document.getElementById('start-menu')
+
+/*
+  PUBLIC BARE SERVER
+  May go offline anytime.
+*/
+
+const scramjet = new ScramjetController({
+  prefix: '/scramjet/',
+  barePath: 'https://bare.night-x.com/bare/'
+})
+
+window.scramjet = scramjet
+
+window.openBrowser = function () {
+  browserWindow.style.display = 'block'
+}
+
+window.closeBrowser = function () {
+  browserWindow.style.display = 'none'
+}
+
+window.toggleStartMenu = function () {
+
+  if(startMenu.style.display === 'block'){
+    startMenu.style.display = 'none'
+  } else {
+    startMenu.style.display = 'block'
   }
 
-  function closeBrowser() {
-    browserWindow.style.display = 'none'
+}
+
+window.goToUrl = async function () {
+
+  let url = urlInput.value.trim()
+
+  if(
+    !url.startsWith('http://') &&
+    !url.startsWith('https://')
+  ){
+    url = 'https://' + url
   }
 
-  function toggleStartMenu() {
-    if (startMenu.style.display === 'block') {
-      startMenu.style.display = 'none'
-    } else {
-      startMenu.style.display = 'block'
-    }
+  browserFrame.srcdoc = `
+    <div class="loading">
+      Loading ${url}...
+    </div>
+  `
+
+  try{
+
+    const encoded =
+      await scramjet.encodeUrl(url)
+
+    browserFrame.src = encoded
+
+  } catch(err){
+
+    console.error(err)
+
+    browserFrame.srcdoc = `
+      <div style="
+        padding:20px;
+        font-family:Arial;
+      ">
+        <h2>Failed to load website</h2>
+
+        <p>
+          Public Scramjet backend may be offline.
+        </p>
+
+        <p>
+          Try another website.
+        </p>
+      </div>
+    `
   }
+}
 
-  function goToUrl() {
-    let url = urlInput.value.trim()
+/* CLOCK */
 
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      url = 'https://' + url
-    }
+function updateClock(){
 
-    /*
-      SCRAMJET INTEGRATION
+  const now = new Date()
 
-      Replace this section with:
-
-      const encoded = window.scramjet.encodeUrl(url)
-      browserFrame.src = encoded
-
-      after installing Scramjet.
-    */
-
-    browserFrame.src = url
-  }
-
-  function updateClock() {
-    const now = new Date()
-
-    document.getElementById('clock').innerText =
-      now.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit'
+  document.getElementById('clock')
+    .innerText =
+      now.toLocaleTimeString([],{
+        hour:'2-digit',
+        minute:'2-digit'
       })
+}
+
+setInterval(updateClock,1000)
+updateClock()
+
+/* WINDOW DRAGGING */
+
+const dragBar =
+  document.getElementById('drag-bar')
+
+let dragging = false
+let offsetX = 0
+let offsetY = 0
+
+dragBar.addEventListener(
+  'mousedown',
+  (e)=>{
+
+    dragging = true
+
+    offsetX =
+      e.clientX -
+      browserWindow.offsetLeft
+
+    offsetY =
+      e.clientY -
+      browserWindow.offsetTop
   }
+)
 
-  setInterval(updateClock, 1000)
-  updateClock()
+document.addEventListener(
+  'mousemove',
+  (e)=>{
 
-  // Window dragging
-  const dragBar = document.getElementById('drag-bar')
+    if(!dragging) return
 
-  let isDragging = false
-  let offsetX = 0
-  let offsetY = 0
+    browserWindow.style.left =
+      (e.clientX - offsetX) + 'px'
 
-  dragBar.addEventListener('mousedown', (e) => {
-    isDragging = true
+    browserWindow.style.top =
+      (e.clientY - offsetY) + 'px'
+  }
+)
 
-    offsetX = e.clientX - browserWindow.offsetLeft
-    offsetY = e.clientY - browserWindow.offsetTop
-  })
+document.addEventListener(
+  'mouseup',
+  ()=>{
 
-  document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return
+    dragging = false
+  }
+)
 
-    browserWindow.style.left = e.clientX - offsetX + 'px'
-    browserWindow.style.top = e.clientY - offsetY + 'px'
-  })
-
-  document.addEventListener('mouseup', () => {
-    isDragging = false
-  })
 </script>
-
-<!--
-  ==========================================
-  SCRAMJET INSTALLATION
-  ==========================================
-
-  1. Install Node.js
-
-  2. Run:
-
-     npm install @mercuryworkshop/scramjet
-     npm install express
-     npm install @tomphttp/bare-server-node
-
-  3. Create backend:
-
-     const express = require('express')
-     const http = require('http')
-     const { createBareServer } = require('@tomphttp/bare-server-node')
-
-     const app = express()
-     const server = http.createServer(app)
-
-     const bare = createBareServer('/bare/')
-
-     app.use(express.static('public'))
-
-     server.on('request', (req, res) => {
-       if (bare.shouldRoute(req)) {
-         bare.routeRequest(req, res)
-       } else {
-         app(req, res)
-       }
-     })
-
-     server.listen(8080)
-
-  4. Add Scramjet register script.
-
-  5. Replace iframe navigation with Scramjet encoding.
-
--->
 
 </body>
 </html>
-```
