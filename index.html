@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Local Proxy - Demo</title>
+    <link rel="stylesheet" href="./public/styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .demo-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+            font-size: 2em;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+        .info-box {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+        .info-box code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .btn:hover {
+            background: #764ba2;
+        }
+        .feature-list {
+            text-align: left;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .feature-list li {
+            margin: 10px 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🌐 Horizon Local Proxy</h1>
+        <p>A localhost-first browser web proxy for legitimate personal testing, development, and access through a browser you control.</p>
+        
+        <div class="info-box">
+            <strong>About this project:</strong> This is a Node.js-based web proxy that allows you to browse the web through a local proxy server. It's useful for testing, development, and accessing content in controlled environments.
+        </div>
+
+        <h2>Features</h2>
+        <ul class="feature-list">
+            <li>✅ Browse through a localhost proxy</li>
+            <li>✅ Handles root-relative app navigation</li>
+            <li>✅ Built-in ad blocking</li>
+            <li>✅ Session-based cookie management</li>
+            <li>✅ HTML/CSS/JavaScript rewriting</li>
+        </ul>
+
+        <h2>Quick Start</h2>
+        <div class="info-box">
+            <code>npm install</code><br>
+            <code>npm start</code><br><br>
+            Then open <code>http://127.0.0.1:8080</code>
+        </div>
+
+        <h2>Environment Variables</h2>
+        <ul class="feature-list">
+            <li><code>PORT=3000</code> - Change the port (default: 8080)</li>
+            <li><code>HOST=0.0.0.0</code> - Bind to all interfaces (default: 127.0.0.1)</li>
+            <li><code>ALLOW_PRIVATE=1</code> - Allow private network targets</li>
+            <li><code>DEBUG_PROXY=1</code> - Enable debug logging</li>
+        </ul>
+
+        <div style="margin-top: 30px;">
+            <a href="https://github.com/eenderaa/fake-OS" class="btn">View on GitHub</a>
+            <a href="https://github.com/eenderaa/fake-OS#readme" class="btn">Read Full Docs</a>
+        </div>
+
+        <p style="margin-top: 40px; font-size: 0.9em; color: #999;">
+            Note: To run this locally, clone the repository and follow the Quick Start instructions above.
+        </p>
+    </div>
+
+    <script src="./public/app.js" defer></script>
+</body>
+</html>
